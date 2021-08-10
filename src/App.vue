@@ -1,14 +1,20 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
+  <div class="container">
+    <Nav />
+    <div class="layout">
+      <router-view />
+    </div>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang = "ts">
+import { defineAsyncComponent, defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-  }
+    Nav: defineAsyncComponent(() => import('./components/Nav.vue')),
+  },
 })
 </script>
 

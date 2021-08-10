@@ -8,7 +8,10 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "lib": ["esnext", "dom"]
+    "lib": ["esnext", "dom"],
+    "allowJs": true,
+    "skipLibCheck": true//跳过检查，element plus 的.d.ts很奇怪
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules"]
 }
