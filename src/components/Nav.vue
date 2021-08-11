@@ -50,26 +50,27 @@ export default defineComponent({
           path: '/archive',
           name: '归档',
         },
-        {
-          index: '4',
-          path: '/project',
-          name: '项目',
-        },
-        {
-          index: '5',
-          path: '/timeline',
-          name: '历程',
-        },
-        {
-          index: '6',
-          path: '/message',
-          name: '留言',
-        },
-        {
-          index: '7',
-          path: '/about',
-          name: '关于',
-        },
+        //后续TODO
+        // {
+        //   index: '4',
+        //   path: '/project',
+        //   name: '项目',
+        // },
+        // {
+        //   index: '5',
+        //   path: '/timeline',
+        //   name: '历程',
+        // },
+        // {
+        //   index: '6',
+        //   path: '/message',
+        //   name: '留言',
+        // },
+        // {
+        //   index: '7',
+        //   path: '/about',
+        //   name: '关于',
+        // },
       ] as Array<NavListItem>,
       activeIndex: '0',
       enterSlideUp: false,
@@ -98,7 +99,7 @@ export default defineComponent({
     //监听路由
     const router = useRouter()
     const route = useRoute()
-    watch(
+    const unwatch = watch(
       route,
       (newVal, oldVal) => {
         routeChange(newVal, oldVal)
@@ -109,11 +110,15 @@ export default defineComponent({
     return {
       state,
       routeChange,
+      // unwatch
     }
   },
   mounted() {
     this.routeChange(this.$route, this.$route)
   },
+  unmounted(){
+    // this.unwatch();
+  }
   //vue2
   // watch: {
   //   $route: {

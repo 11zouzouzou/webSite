@@ -2,16 +2,25 @@ import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw } 
 import App from '../App.vue'
 import Hello from '../components/HelloWorld.vue'
 
+const Home = () => import('../views/Home.vue')
+const Articles = () => import('../views/Articles.vue')
+const Archive = () => import('../views/Archive.vue')
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: Hello,
+    component: Home,
   },
   {
     path: '/articles',
     name: 'articles',
-    component:Hello
+    component: Articles,
+  },
+  {
+    path: '/archive',
+    name: 'archive',
+    component: Archive,
   },
   {
     path: '/hello',
