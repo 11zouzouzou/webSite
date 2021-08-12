@@ -15,17 +15,26 @@
               </el-menuItem>
             </el-menu>
           </el-col>
-          <el-col v-if="computedUserInfo._id" >登出</el-col>
+          <!-- TODO remove "1" -->
+          <el-col v-if="computedUserInfo._id + '1'" :span="4">
+            <div class="nav-right">
+              <el-dropdown>
+              <span class="el-dropdown-link">
+                Zouzouzou
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <template #dropdown>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item command="logout">登 出</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+            </div>
+          </el-col>
           <el-col v-else :span="3">
             <div class="nav-right">
-              <el-button
-                size="small"
-                type="primary"
-              >登录</el-button>
-              <el-button
-                size="small"
-                type="danger"
-              >注册</el-button>
+              <el-button size="small" type="primary">登录</el-button>
+              <el-button size="small" type="danger">注册</el-button>
             </div>
           </el-col>
         </el-row>
@@ -199,6 +208,13 @@ export default defineComponent({
     .el-dropdown {
       cursor: pointer;
       padding-right: 60px;
+    }
+    .el-dropdown-link {
+      cursor: pointer;
+      color: #409eff;
+    }
+    .el-icon-arrow-down {
+      font-size: 12px;
     }
     .user-img {
       position: absolute;
