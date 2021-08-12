@@ -1,30 +1,47 @@
 <template>
-  <div class="nav">
-    <div class="nav-content">
-      <el-row :gutter="20">
-        <el-col :span="3">
-          <router-link to="/hello">
-            <img class="logo" alt="Zouzouzou" src="../assets/logo.jpg" />
-          </router-link>
-        </el-col>
-        <el-col :span="15">
-          <el-menu :router="true" :default-active="state.activeIndex" active-text-color="#409eff" class="el-menu-demo" mode="horizontal">
-            <el-menuItem :route="l.path" :index="l.index" v-for="l in state.list" :key="l.index">
-              {{ l.name }}
-            </el-menuItem>
-          </el-menu>
-        </el-col>
-      </el-row>
+  <div>
+    <div v-if="!state.isMobile" class="nav">
+      <div class="nav-content">
+        <el-row :gutter="20">
+          <el-col :span="3">
+            <router-link to="/hello">
+              <img class="logo" alt="Zouzouzou" src="../assets/logo.jpg" />
+            </router-link>
+          </el-col>
+          <el-col :span="15">
+            <el-menu :router="true" :default-active="state.activeIndex" active-text-color="#409eff" class="el-menu-demo" mode="horizontal">
+              <el-menuItem :route="l.path" :index="l.index" v-for="l in state.list" :key="l.index">
+                {{ l.name }}
+              </el-menuItem>
+            </el-menu>
+          </el-col>
+          <el-col v-if="computedUserInfo._id" >登出</el-col>
+          <el-col v-else :span="3">
+            <div class="nav-right">
+              <el-button
+                size="small"
+                type="primary"
+              >登录</el-button>
+              <el-button
+                size="small"
+                type="danger"
+              >注册</el-button>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
     </div>
+    <div v-else class="nav">mobile</div>
   </div>
 </template>
 <script lang="ts">
 import { useStore } from 'vuex'
-import { defineComponent, reactive, watch } from 'vue'
-import { NavListItem } from '../types/index'
+import { computed, defineComponent, reactive, watch } from 'vue'
+import { NavListItem, UserInfo } from '../types/index'
 import { useRoute, useRouter } from 'vue-router'
 import { key } from '../store'
 import { isMobileOrPc } from '../utils/utils'
+import { SAVE_USER } from '../store/types'
 
 export default defineComponent({
   name: 'Nav',
@@ -107,18 +124,36 @@ export default defineComponent({
       { immediate: true }
     )
 
+    const computedUserInfo = computed(() => {
+      let userInfo: UserInfo = {
+        _id: '',
+        name: '',
+        avatar: '',
+      }
+      if (window.sessionStorage.userInfo) {
+        //TODO save userInfo
+        userInfo = JSON.parse(window.sessionStorage.userInfo)
+        store.commit(SAVE_USER, { userInfo })
+      }
+      if (store.state.user && store.state.user.userInfo) {
+        userInfo = store.state.user.userInfo
+      }
+      return userInfo
+    })
+
     return {
       state,
       routeChange,
+      computedUserInfo,
       // unwatch
     }
   },
   mounted() {
     this.routeChange(this.$route, this.$route)
   },
-  unmounted(){
+  unmounted() {
     // this.unwatch();
-  }
+  },
   //vue2
   // watch: {
   //   $route: {

@@ -1,14 +1,16 @@
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
+import { UserInfo } from '../types'
 import user from './modules/user'
 
 export interface State {
-  count: number,
-  self:number
+  count: number
+  //modules
+  user?: { userInfo: UserInfo }
 }
 
 export interface QState {
-  count: number,
+  count: number
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()
@@ -17,7 +19,6 @@ export const store = createStore<State>({
   state() {
     return {
       count: 0,
-      self: 1,
     }
   },
   modules: {
